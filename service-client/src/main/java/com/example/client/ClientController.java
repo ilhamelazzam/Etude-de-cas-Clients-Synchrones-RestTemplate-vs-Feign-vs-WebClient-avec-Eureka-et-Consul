@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.Instant;
+import java.util.Map;
+
 @RestController
 @AllArgsConstructor
 public class ClientController {
@@ -33,5 +36,13 @@ public class ClientController {
                 .retrieve()
                 .bodyToMono(Object.class)
                 .block();
+    }
+
+    @GetMapping("/api/clients/health")
+    public Map<String, Object> health() {
+        return Map.of(
+                "status", "UP",
+                "checkedAt", Instant.now().toString()
+        );
     }
 }
